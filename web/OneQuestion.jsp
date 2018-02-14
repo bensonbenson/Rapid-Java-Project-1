@@ -1,17 +1,15 @@
-<%-- 
-    Document   : OneQuestion
-    Created on : Feb 12, 2018, 1:58:41 PM
-    Author     : benson
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import = "javabeans.QuestionBean" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Multiple Choice Question</title>
+
+     
     </head>
     <body>
-        <h1>Hello World!</h1>
+        
     </body>
 </html>
