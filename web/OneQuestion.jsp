@@ -147,6 +147,21 @@
                         }
                     }
                 }
+                else{
+                    if((request.getParameter("buttonName") != null)){                    
+                        out.print("<span style=\"font-family: Helvetica, sans-serif\"> You did not answer this <img src=\"images/noanswer.jpg\" alt=\"No answer\"> </span><br>");
+                        if(questionId.getHint().length() > 0){
+                            out.print("<div id=\"a4\" style=\"color: green; font-family: Helvetica, sans-serif\" > Click here to show correct answer and explanation. </div><br>");
+                            out.print("<script type=\"text/javascript\">$(document).ready(function() {$(\"#a4\").click(function() {$(this).html(\"<span style= 'color: green; font-family: Helvetica, sans-serif;' > The correct answer is " + questionId.getAnswerKey() + "</span><br>" + "<div style = 'color: purple; font-family: Times New Roman;'> Explanation: " 
+                                    + questionId.getHint() + "</div>\");});});</script> ");
+                        }
+                        else{
+                            out.print("<div id=\"a4\" style=\"color: green; font-family: Helvetica, sans-serif\" > Click here to show correct answer. </div><br>");
+                            out.print("<script type=\"text/javascript\">$(document).ready(function() {$(\"#a4\").click(function() {$(this).html(\"<div style = 'color: green; font-family: Helvetica, sans-serif;'> The correct answer is " 
+                                    + questionId.getAnswerKey() + "</div>\");});});</script> ");
+                        }
+                    }
+                }
             %>
             <input type="submit" style = "margin-bottom: 0px; margin-top: 10px; margin-left: 5px;border: 0px; font-family: Helvetica, monospace; font-size: 85%;background-color: rgba(0, 128, 0, 0.7); border-radius: 0px; color:black;"name = "buttonName" value= "Check My Answer">
         </form>

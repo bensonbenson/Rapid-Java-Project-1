@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class QuestionBean {
     private String chapterNo, questionNo;
@@ -17,8 +18,9 @@ public class QuestionBean {
     private String answerKey;
     private String hint;
     PreparedStatement preparedQuestion;
+    PreparedStatement preparedInsert;
     ResultSet result;
-    private String[] enteredAnswers = {"a"};
+    private String[] enteredAnswers;
     
     //Initialize Database
     public void initializeJdbc(){
@@ -33,6 +35,9 @@ public class QuestionBean {
             
             String queryQuestion = "select chapterNo, questionNo, question, choiceA, choiceB, choiceC, choiceD, choiceE, answerKey, hint from intro11equiz where chapterNo = ? && questionNo = ?";
             preparedQuestion = connection.prepareStatement(queryQuestion);
+            
+            String queryAdd = "insert into intro11e values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            preparedInsert = connection.prepareStatement(queryAdd);
         }
         catch(Exception ex){
             ex.printStackTrace();
@@ -40,7 +45,7 @@ public class QuestionBean {
     }
     
     //Selects question from database
-    public void loadQuestion(String chapterNo, String  questionNo){
+    public void loadQuestion(String chapterNo, String  questionNo)throws SQLException{
         try{
             preparedQuestion.setString(1, chapterNo);
             preparedQuestion.setString(2, questionNo);
@@ -58,6 +63,28 @@ public class QuestionBean {
                 setAnswerKey(result.getString(9));
                 setHint(result.getString(10));
             }
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+    
+    //Insert answer selection to database
+    public void insert(String time, String isCorrect, String hostname, String a, String b, String c, String d, String e, String user)throws SQLException{
+        try{
+            preparedInsert.setString(1, getChapterNo());
+            preparedInsert.setString(2, getQuestionNo());
+            preparedInsert.setString(3, time);
+            preparedInsert.setString(4, isCorrect);
+            preparedInsert.setString(5, hostname);
+            preparedInsert.setString(6, a);
+            preparedInsert.setString(7, b);
+            preparedInsert.setString(8, c);
+            preparedInsert.setString(9, d);
+            preparedInsert.setString(10, e);
+            preparedInsert.setString(11, user);
+            preparedInsert.executeUpdate();
+            
         }
         catch(Exception ex){
             ex.printStackTrace();
@@ -83,10 +110,6 @@ public class QuestionBean {
             }
         }
         return num;
-    }
-    
-    public String getQuestionNumber(){
-        return "5.2.1"; //temp, duh
     }
 
     public String getChapterNo() {
