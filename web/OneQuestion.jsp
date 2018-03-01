@@ -128,17 +128,71 @@
                     for(String thing : selectedAnswers){
                         build.append(thing);
                     }
+                    //Correct answer selected
                     if(build.toString().equalsIgnoreCase(key)){
                         out.print("<span style=\"color: green; font-family: Helvetica, sans-serif\" > Your answer " + build.toString() + " is correct. </span><img src=\"images/correct.jpg\" alt=\"Wrong\"> <br>");
-                        if(questionId.getHint().length() > 0){
-                            out.print("<div id=\"a3\" style=\"color: green; font-family: Helvetica, sans-serif\" > Click here to show an explanation. </div><br>");
-                            out.print("<script type=\"text/javascript\">$(document).ready(function() {$(\"#a3\").click(function() {$(this).html(\"<div style = 'color: purple; font-family: Times New Roman;'> Explanation: " 
-                                    + questionId.getHint() + "</div>\");});});</script> ");
+                            //Insert results into db
+                            boolean bitA = false;
+                            boolean bitB = false;
+                            boolean bitC = false;
+                            boolean bitD = false;
+                            boolean bitE = false;
+                            boolean isCorrect = true;
+                            for(int i = 0; i < selectedAnswers.length; i++){
+                                 if (selectedAnswers[i].equalsIgnoreCase("A")){
+                                     bitA = true;
+                                 }
+                                 if (selectedAnswers[i].equalsIgnoreCase("B")){
+                                     bitB = true;
+                                 }
+                                 if (selectedAnswers[i].equalsIgnoreCase("C")){
+                                     bitC = true;
+                                 }
+                                 if (selectedAnswers[i].equalsIgnoreCase("D")){
+                                     bitD = true;
+                                 }
+                                 if (selectedAnswers[i].equalsIgnoreCase("E")){
+                                     bitE = true;
+                                 }
+                            }
+                            questionId.insert(isCorrect, request.getRemoteAddr(), bitA, bitB, bitC, bitD, bitE, request.getRemoteAddr());
+                            
+                            if(questionId.getHint().length() > 0){
+                                out.print("<div id=\"a3\" style=\"color: green; font-family: Helvetica, sans-serif\" > Click here to show an explanation. </div><br>");
+                                out.print("<script type=\"text/javascript\">$(document).ready(function() {$(\"#a3\").click(function() {$(this).html(\"<div style = 'color: purple; font-family: Times New Roman;'> Explanation: " 
+                                    + questionId.getHint() + "</div>\");});});</script> ");  
                         }
                     }
                     else{
+                        //Wrong answer selected
                         if(!build.toString().equalsIgnoreCase(key)){
                             out.print("<span style=\"color: red; font-family: Helvetica, sans-serif\" > Your answer " + build.toString() + " is wrong. </span><img src=\"images/wrong.jpg\" alt=\"Wrong\"> <br>");
+                            //Insert results into db
+                            boolean bitA = false;
+                            boolean bitB = false;
+                            boolean bitC = false;
+                            boolean bitD = false;
+                            boolean bitE = false;
+                            boolean isCorrect = false;
+                            for(int i = 0; i < selectedAnswers.length; i++){
+                                 if (selectedAnswers[i].equalsIgnoreCase("A")){
+                                     bitA = true;
+                                 }
+                                 if (selectedAnswers[i].equalsIgnoreCase("B")){
+                                     bitB = true;
+                                 }
+                                 if (selectedAnswers[i].equalsIgnoreCase("C")){
+                                     bitC = true;
+                                 }
+                                 if (selectedAnswers[i].equalsIgnoreCase("D")){
+                                     bitD = true;
+                                 }
+                                 if (selectedAnswers[i].equalsIgnoreCase("E")){
+                                     bitE = true;
+                                 }
+                            }
+                            questionId.insert(isCorrect, request.getRemoteAddr(), bitA, bitB, bitC, bitD, bitE, request.getRemoteAddr());
+                            
                             if(questionId.getHint().length() > 0){
                                 out.print("<div id=\"a3\" style=\"color: green; font-family: Helvetica, sans-serif\" > Click here to show an explanation. </div><br>");
                                 out.print("<script type=\"text/javascript\">$(document).ready(function() {$(\"#a3\").click(function() {$(this).html(\"<div style = 'color: purple; font-family: Times New Roman;'> Explanation: " 
@@ -148,8 +202,34 @@
                     }
                 }
                 else{
+                    //Takes care of trying to submit without selecting an answer
                     if((request.getParameter("buttonName") != null)){                    
                         out.print("<span style=\"font-family: Helvetica, sans-serif\"> You did not answer this <img src=\"images/noanswer.jpg\" alt=\"No answer\"> </span><br>");
+                        //Insert results into db
+                            boolean bitA = false;
+                            boolean bitB = false;
+                            boolean bitC = false;
+                            boolean bitD = false;
+                            boolean bitE = false;
+                            boolean isCorrect = true;
+                            for(int i = 0; i < selectedAnswers.length; i++){
+                                 if (selectedAnswers[i].equalsIgnoreCase("A")){
+                                     bitA = true;
+                                 }
+                                 if (selectedAnswers[i].equalsIgnoreCase("B")){
+                                     bitB = true;
+                                 }
+                                 if (selectedAnswers[i].equalsIgnoreCase("C")){
+                                     bitC = true;
+                                 }
+                                 if (selectedAnswers[i].equalsIgnoreCase("D")){
+                                     bitD = true;
+                                 }
+                                 if (selectedAnswers[i].equalsIgnoreCase("E")){
+                                     bitE = true;
+                                 }
+                            }
+                            questionId.insert(isCorrect, request.getRemoteAddr(), bitA, bitB, bitC, bitD, bitE, request.getRemoteAddr());
                         if(questionId.getHint().length() > 0){
                             out.print("<div id=\"a4\" style=\"color: green; font-family: Helvetica, sans-serif\" > Click here to show correct answer and explanation. </div><br>");
                             out.print("<script type=\"text/javascript\">$(document).ready(function() {$(\"#a4\").click(function() {$(this).html(\"<span style= 'color: green; font-family: Helvetica, sans-serif;' > The correct answer is " + questionId.getAnswerKey() + "</span><br>" + "<div style = 'color: purple; font-family: Times New Roman;'> Explanation: " 

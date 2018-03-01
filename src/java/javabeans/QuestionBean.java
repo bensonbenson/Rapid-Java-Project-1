@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 
 public class QuestionBean {
     private String chapterNo, questionNo;
@@ -36,7 +37,7 @@ public class QuestionBean {
             String queryQuestion = "select chapterNo, questionNo, question, choiceA, choiceB, choiceC, choiceD, choiceE, answerKey, hint from intro11equiz where chapterNo = ? && questionNo = ?";
             preparedQuestion = connection.prepareStatement(queryQuestion);
             
-            String queryAdd = "insert into intro11e values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String queryAdd = "insert into intro11e (chapterNo, questionNo, isCorrect, hostname, answerA, answerB, answerC, answerD, answerE, username) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             preparedInsert = connection.prepareStatement(queryAdd);
         }
         catch(Exception ex){
@@ -70,20 +71,20 @@ public class QuestionBean {
     }
     
     //Insert answer selection to database
-    public void insert(String time, String isCorrect, String hostname, String a, String b, String c, String d, String e, String user)throws SQLException{
+    public void insert(boolean isCorrect, String hostname, boolean a, boolean b, boolean c, boolean d, boolean e, String user)throws SQLException{
         try{
             preparedInsert.setString(1, getChapterNo());
             preparedInsert.setString(2, getQuestionNo());
-            preparedInsert.setString(3, time);
-            preparedInsert.setString(4, isCorrect);
-            preparedInsert.setString(5, hostname);
-            preparedInsert.setString(6, a);
-            preparedInsert.setString(7, b);
-            preparedInsert.setString(8, c);
-            preparedInsert.setString(9, d);
-            preparedInsert.setString(10, e);
-            preparedInsert.setString(11, user);
-            preparedInsert.executeUpdate();
+            preparedInsert.setBoolean(3, isCorrect);
+            preparedInsert.setString(4, hostname);
+            preparedInsert.setBoolean(5, a);
+            preparedInsert.setBoolean(6, b);
+            preparedInsert.setBoolean(7, c);
+            preparedInsert.setBoolean(8, d);
+            preparedInsert.setBoolean(9, e);
+            preparedInsert.setString(10, user);
+            System.out.print(isCorrect);
+            preparedInsert.execute();
             
         }
         catch(Exception ex){
