@@ -1,13 +1,4 @@
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%  //String chapterNo, questionNo; //Set default page
-    //if(request.getParameter("chapterNo") == null){
-    //    chapterNo = "1";
-    //}
-    //if(request.getParameter("questionNo") == null){
-    //    questionNo = "38";
-    //}
-%> 
 <%@page import = "javabeans.QuestionBean" %>
 <jsp:useBean id = "questionId" scope = "session"  class = "javabeans.QuestionBean">
      <jsp:setProperty name="questionId" property="enteredAnswers" value="<%= request.getParameterValues("answer")%>" />
@@ -18,7 +9,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Multiple Choice Question</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
@@ -30,6 +20,9 @@
         </style>
         <link rel="stylesheet" type="text/css" href="intro6e.css" />
         <link rel="stylesheet" type="text/css" href="intro6eselftest.css" />
+        <link rel="stylesheet" type="text/css" href="color.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
         <style> 
@@ -55,22 +48,19 @@
     </h3>
     <div style="width: 500px auto; max-width: 620px; margin: 0 auto; border: 1px solid #f6912f; font-weight: normal ">
         <form method="post" style="padding-left: 10px; padding-bottom: 10px; padding-top: 10px"> 
-            <%String question = "";
-              String questionCode = "";
-            
-              String fullQuestion = questionId.getQuestionText();
-              if(fullQuestion.contains(" \n")){
-              String[] parts = fullQuestion.trim().split("\n", 2);
-              question = parts[0];
-              questionCode = parts[1];
-              %><div id="questionstatement"> <pre> <%= question %></pre>  </div>
-              <div id="question"> <pre><%= questionCode %></pre> </div>
-              <%}
-              else{
-                  question = fullQuestion;
-                  %><span style="font-family: Times New Roman, sans-serif">  <%= question %> </span><br><br>
-              <%}
+              <%String question = "";
+                String questionCode = "";
+                String fullQuestion = questionId.getQuestionText();
+                String[] parts = fullQuestion.trim().split("\n", 2);
+                question = parts[0];
                 
+                if(parts.length > 1){
+                    questionCode = parts[1];
+                }
+              %><div style="font-family: Times New Roman">  <%= question %> </div>
+              <div id="question"> <pre><code><%= questionCode %></code></pre> </div>
+              
+                <%
                 int numAnswers = questionId.getNumberOfAnswers();
                 String key = questionId.getAnswerKey();
                 String choiceA = questionId.getChoiceA();

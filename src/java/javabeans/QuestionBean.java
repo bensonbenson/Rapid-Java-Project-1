@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class QuestionBean {
-    private String questionNumber;
     private String chapterNo, questionNo;
     private String questionText;
     private String choiceA;
@@ -29,7 +28,7 @@ public class QuestionBean {
             System.out.println("Driver loaded.");
             
             //Connect Database
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/btran", "root", "rootpass");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://35.185.94.191/btran", "btran", "tiger");
             System.out.println("Database connected.");
             
             String queryQuestion = "select chapterNo, questionNo, question, choiceA, choiceB, choiceC, choiceD, choiceE, answerKey, hint from intro11equiz where chapterNo = ? && questionNo = ?";

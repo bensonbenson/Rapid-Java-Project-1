@@ -26,7 +26,7 @@ public class ParseQuestions {
                 System.out.println("Driver loaded.");
 
                 //Connect Database
-                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/btran", "root", "rootpass");
+                Connection connection = DriverManager.getConnection("jdbc:mysql://35.185.94.191/btran", "btran", "tiger");
                 System.out.println("Database connected.");
                 String query = "insert into intro11equiz values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 preparedStatementInsert = connection.prepareStatement(query);
