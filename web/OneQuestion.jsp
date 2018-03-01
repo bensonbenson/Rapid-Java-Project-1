@@ -1,15 +1,169 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%  //String chapterNo, questionNo; //Set default page
+    //if(request.getParameter("chapterNo") == null){
+    //    chapterNo = "1";
+    //}
+    //if(request.getParameter("questionNo") == null){
+    //    questionNo = "38";
+    //}
+%> 
 <%@page import = "javabeans.QuestionBean" %>
+<jsp:useBean id = "questionId" scope = "session"  class = "javabeans.QuestionBean">
+     <jsp:setProperty name="questionId" property="enteredAnswers" value="<%= request.getParameterValues("answer")%>" />
+</jsp:useBean>
+<jsp:setProperty name = "questionId" property = "*" />
+<% questionId.initializeJdbc(); %>
+<% questionId.loadQuestion(request.getParameter("chapterNo"), request.getParameter("questionNo")); %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Multiple Choice Question</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+        <style type = "text/css">
+            body {font-family: "Courier New", sans-serif; font-size: 100%; color: black}
+            .keyword {color: #000080; font-weight: normal}
+            .comment {color: gray}
+            .literal {font-weight: normal; color: #3366FF}
+        </style>
+        <link rel="stylesheet" type="text/css" href="intro6e.css" />
+        <link rel="stylesheet" type="text/css" href="intro6eselftest.css" />
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+        <style> 
+            #question {font-family: "Courier New", Courier, Verdana, Helvetica, sans-serif; font-size: 100%; 
+                       color: #8000f0; color: black; margin-left: 0.5em}
+            #questionstatement {font-family: 
+                                    Times New Roman, monospace, Courier, Verdana, Helvetica, sans-serif; font-size: 100%; color: #8000f0; 
+                                color: black; margin-left:1.8em; margin-top:0.5em; margin-bottom:0.5em; }
+            #choices {font-family: Times New Roman, Helvetica, sans-serif; font-size: 100%; 
+                      color: #8000f0; color: black; margin-left:25.0pt; margin-left:0.5em; margin-bottom:0.5em; }
+            #choicemargin {font-family: Times New Roman, Helvetica, sans-serif; font-size: 100%; }
+            #choicestatement {font-family: Times New Roman, Helvetica, sans-serif; font-size: 100%; 
+                              color: #8000f0; color: black; margin-left:25.0pt; margin-left:0.5em; margin-bottom:0.5em; }
+            .preBlock {margin-left:0px;text-indent:0.0px; font-family:monospace; font-size: 120%}
+            .keyword {color: green;}
+            .comment {color: darkred;  }
+            .literal {color: darkblue}
+            .constant {color: teal}
+            #h3style {color: white; font-family: Helvetica, sans-serif;  font-size: 100%; border-color: #6193cb; text-align: center;margin-bottom: 0.5em; background-color: #6193cb;}  
+        </style>
+    <h3 id="h3style" style = " width: 500px auto; max-width: 620px; margin: 0 auto; ">
+        Multiple Choice Question <%= request.getParameter("title") %>
+    </h3>
+    <div style="width: 500px auto; max-width: 620px; margin: 0 auto; border: 1px solid #f6912f; font-weight: normal ">
+        <form method="post" style="padding-left: 10px; padding-bottom: 10px; padding-top: 10px"> 
+            <%String question = "";
+              String questionCode = "";
+            
+              String fullQuestion = questionId.getQuestionText();
+              if(fullQuestion.contains(" \n")){
+              String[] parts = fullQuestion.trim().split("\n", 2);
+              question = parts[0];
+              questionCode = parts[1];
+              %><div id="questionstatement"> <pre> <%= question %></pre>  </div>
+              <div id="question"> <pre><%= questionCode %></pre> </div>
+              <%}
+              else{
+                  question = fullQuestion;
+                  %><span style="font-family: Times New Roman, sans-serif">  <%= question %> </span><br><br>
+              <%}
+                
+                int numAnswers = questionId.getNumberOfAnswers();
+                String key = questionId.getAnswerKey();
+                String choiceA = questionId.getChoiceA();
+                String choiceB = questionId.getChoiceB();
+                String choiceC = questionId.getChoiceC();
+                String choiceD = questionId.getChoiceD();
+                String choiceE = questionId.getChoiceE();
 
-     
+                if (numAnswers == 2){
+                    if(key.length() > 1){
+              %> <input type="checkbox" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br>
+                        <input type="checkbox" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br>
+                    <%}
+                    else{
+                        %><input type="radio" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br>
+                        <input type="radio" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br>
+                    <%}
+                }
+                if (numAnswers == 3){
+                    if(key.length() > 1){
+                        %> <input type="checkbox" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br>
+                        <input type="checkbox" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br>
+                        <input type="checkbox" value="C" name="answer"><span id="choicelabel">C.</span> <span id="choicestatement"> <%= choiceC %> </span><br>
+                    <%}
+                    else{
+                        %><input type="radio" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br>
+                        <input type="radio" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br>
+                        <input type="radio" value="C" name="answer"><span id="choicelabel">C.</span> <span id="choicestatement"> <%= choiceC %> </span><br>
+                    <%}
+                }
+                if (numAnswers == 4){
+                    if(key.length() > 1){
+                        %> <input type="checkbox" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br>
+                        <input type="checkbox" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br>
+                        <input type="checkbox" value="C" name="answer"><span id="choicelabel">C.</span> <span id="choicestatement"> <%= choiceC %> </span><br>
+                        <input type="checkbox" value="D" name="answer"><span id="choicelabel">D.</span> <span id="choicestatement"> <%= choiceD %> </span><br>
+                    <%}
+                    else{
+                        %><input type="radio" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br>
+                        <input type="radio" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br>
+                        <input type="radio" value="C" name="answer"><span id="choicelabel">C.</span> <span id="choicestatement"> <%= choiceC %> </span><br>
+                        <input type="radio" value="D" name="answer"><span id="choicelabel">D.</span> <span id="choicestatement"> <%= choiceD %> </span><br>
+                    <%}
+                }
+                if (numAnswers == 5){
+                    if(key.length() > 1){
+                        %> <input type="checkbox" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br>
+                        <input type="checkbox" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br>
+                        <input type="checkbox" value="C" name="answer"><span id="choicelabel">C.</span> <span id="choicestatement"> <%= choiceC %> </span><br>
+                        <input type="checkbox" value="D" name="answer"><span id="choicelabel">D.</span> <span id="choicestatement"> <%= choiceD %> </span><br>
+                        <input type="checkbox" value="E" name="answer"><span id="choicelabel">E.</span> <span id="choicestatement"> <%= choiceE %> </span><br>
+                    <%}
+                    else{
+                        %><input type="radio" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br>
+                        <input type="radio" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br>
+                        <input type="radio" value="C" name="answer"><span id="choicelabel">C.</span> <span id="choicestatement"> <%= choiceC %> </span><br>
+                        <input type="radio" value="D" name="answer"><span id="choicelabel">D.</span> <span id="choicestatement"> <%= choiceD %> </span><br>
+                        <input type="radio" value="E" name="answer"><span id="choicelabel">E.</span> <span id="choicestatement"> <%= choiceE %> </span><br>
+                    <%}
+                }
+            %>
+            <%  String[] selectedAnswers = request.getParameterValues("answer");
+                if(selectedAnswers != null){
+                    StringBuilder build = new StringBuilder();
+                    for(String thing : selectedAnswers){
+                        build.append(thing);
+                    }
+                    if(build.toString().equalsIgnoreCase(key)){
+                        out.print("<span style=\"color: green; font-family: Helvetica, sans-serif\" > Your answer " + build.toString() + " is correct. </span><img src=\"images/correct.jpg\" alt=\"Wrong\"> <br>");
+                        if(questionId.getHint().length() > 0){
+                            out.print("<div id=\"a3\" style=\"color: green; font-family: Helvetica, sans-serif\" > Click here to show an explanation. </div><br>");
+                            out.print("<script type=\"text/javascript\">$(document).ready(function() {$(\"#a3\").click(function() {$(this).html(\"<div style = 'color: purple; font-family: Times New Roman;'> Explanation: " 
+                                    + questionId.getHint() + "</div>\");});});</script> ");
+                        }
+                    }
+                    else{
+                        if(!build.toString().equalsIgnoreCase(key)){
+                            out.print("<span style=\"color: red; font-family: Helvetica, sans-serif\" > Your answer " + build.toString() + " is wrong. </span><img src=\"images/wrong.jpg\" alt=\"Wrong\"> <br>");
+                            if(questionId.getHint().length() > 0){
+                                out.print("<div id=\"a3\" style=\"color: green; font-family: Helvetica, sans-serif\" > Click here to show an explanation. </div><br>");
+                                out.print("<script type=\"text/javascript\">$(document).ready(function() {$(\"#a3\").click(function() {$(this).html(\"<div style = 'color: purple; font-family: Times New Roman;'> Explanation: " 
+                                    + questionId.getHint() + "</div>\");});});</script> ");
+                            }
+                        }
+                    }
+                }
+            %>
+            <input type="submit" style = "margin-bottom: 0px; margin-top: 10px; margin-left: 5px;border: 0px; font-family: Helvetica, monospace; font-size: 85%;background-color: rgba(0, 128, 0, 0.7); border-radius: 0px; color:black;"name = "buttonName" value= "Check My Answer">
+        </form>
+    </div>
+
     </head>
     <body>
-        
+
     </body>
 </html>
