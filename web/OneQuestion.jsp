@@ -202,7 +202,7 @@
                     }
                 }
                 else{
-                    //Takes care of trying to submit without selecting an answer
+                    //Takes care of trying to submit without selecting an answer, will not submit to intro11e DB
                     if((request.getParameter("buttonName") != null)){                    
                         out.print("<span style=\"font-family: Helvetica, sans-serif\"> You did not answer this <img src=\"images/noanswer.jpg\" alt=\"No answer\"> </span><br>");
                         if(questionId.getHint().length() > 0){
