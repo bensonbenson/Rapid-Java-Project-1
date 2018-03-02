@@ -43,10 +43,10 @@
             .constant {color: teal}
             #h3style {color: white; font-family: Helvetica, sans-serif;  font-size: 100%; border-color: #6193cb; text-align: center;margin-bottom: 0.5em; background-color: #6193cb;}  
         </style>
-    <h3 id="h3style" style = " width: 500px auto; max-width: 620px; margin: 0 auto; ">
+    <h3 id="h3style" style = " width: 500px auto; max-width: 820px; margin: 0 auto; ">
         Multiple Choice Question <%= request.getParameter("title") %>
     </h3>
-    <div style="width: 500px auto; max-width: 620px; margin: 0 auto; border: 1px solid #f6912f; font-weight: normal ">
+    <div style="width: 500px auto; max-width: 820px; margin: 0 auto; border: 1px solid #f6912f; font-weight: normal ">
         <form method="post" style="padding-left: 10px; padding-bottom: 10px; padding-top: 10px"> 
               <%String question = "";
                 String questionCode = "";
@@ -63,62 +63,62 @@
                 <%
                 int numAnswers = questionId.getNumberOfAnswers();
                 String key = questionId.getAnswerKey();
-                String choiceA = questionId.getChoiceA();
-                String choiceB = questionId.getChoiceB();
-                String choiceC = questionId.getChoiceC();
-                String choiceD = questionId.getChoiceD();
-                String choiceE = questionId.getChoiceE();
+                String choiceA = questionId.stringToHTMLString(questionId.getChoiceA());
+                String choiceB = questionId.stringToHTMLString(questionId.getChoiceB());
+                String choiceC = questionId.stringToHTMLString(questionId.getChoiceC());
+                String choiceD = questionId.stringToHTMLString(questionId.getChoiceD());
+                String choiceE = questionId.stringToHTMLString(questionId.getChoiceE());
 
                 if (numAnswers == 2){
                     if(key.length() > 1){
-              %> <input type="checkbox" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br>
-                        <input type="checkbox" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br>
+                        %><div id = "choicemargin"><input type="checkbox" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br></div>
+                        <div id = "choicemargin"><input type="checkbox" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br></div>
                     <%}
                     else{
-                        %><input type="radio" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br>
-                        <input type="radio" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br>
+                        %><div id = "choicemargin"><input type="radio" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br></div>
+                        <div id = "choicemargin"><input type="radio" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br></div>
                     <%}
                 }
                 if (numAnswers == 3){
                     if(key.length() > 1){
-                        %> <input type="checkbox" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br>
-                        <input type="checkbox" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br>
-                        <input type="checkbox" value="C" name="answer"><span id="choicelabel">C.</span> <span id="choicestatement"> <%= choiceC %> </span><br>
+                        %> <div id = "choicemargin"><input type="checkbox" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br></div>
+                        <div id = "choicemargin"><input type="checkbox" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br></div>
+                        <div id = "choicemargin"><input type="checkbox" value="C" name="answer"><span id="choicelabel">C.</span> <span id="choicestatement"> <%= choiceC %> </span><br></div>
                     <%}
                     else{
-                        %><input type="radio" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br>
-                        <input type="radio" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br>
-                        <input type="radio" value="C" name="answer"><span id="choicelabel">C.</span> <span id="choicestatement"> <%= choiceC %> </span><br>
+                        %><div id = "choicemargin"><input type="radio" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br></div>
+                        <div id = "choicemargin"><input type="radio" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br></div>
+                        <div id = "choicemargin"><input type="radio" value="C" name="answer"><span id="choicelabel">C.</span> <span id="choicestatement"> <%= choiceC %> </span><br></div>
                     <%}
                 }
                 if (numAnswers == 4){
                     if(key.length() > 1){
-                        %> <input type="checkbox" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br>
-                        <input type="checkbox" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br>
-                        <input type="checkbox" value="C" name="answer"><span id="choicelabel">C.</span> <span id="choicestatement"> <%= choiceC %> </span><br>
-                        <input type="checkbox" value="D" name="answer"><span id="choicelabel">D.</span> <span id="choicestatement"> <%= choiceD %> </span><br>
+                        %> <div id = "choicemargin"><input type="checkbox" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br></div>
+                        <div id = "choicemargin"><input type="checkbox" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br></div>
+                        <div id = "choicemargin"><input type="checkbox" value="C" name="answer"><span id="choicelabel">C.</span> <span id="choicestatement"> <%= choiceC %> </span><br></div>
+                        <div id = "choicemargin"><input type="checkbox" value="D" name="answer"><span id="choicelabel">D.</span> <span id="choicestatement"> <%= choiceD %> </span><br></div>
                     <%}
                     else{
-                        %><input type="radio" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br>
-                        <input type="radio" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br>
-                        <input type="radio" value="C" name="answer"><span id="choicelabel">C.</span> <span id="choicestatement"> <%= choiceC %> </span><br>
-                        <input type="radio" value="D" name="answer"><span id="choicelabel">D.</span> <span id="choicestatement"> <%= choiceD %> </span><br>
+                        %><div id = "choicemargin"><input type="radio" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br></div>
+                        <div id = "choicemargin"><input type="radio" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br></div>
+                        <div id = "choicemargin"><input type="radio" value="C" name="answer"><span id="choicelabel">C.</span> <span id="choicestatement"> <%= choiceC %> </span><br></div>
+                        <div id = "choicemargin"><input type="radio" value="D" name="answer"><span id="choicelabel">D.</span> <span id="choicestatement"> <%= choiceD %> </span><br></div>
                     <%}
                 }
                 if (numAnswers == 5){
                     if(key.length() > 1){
-                        %> <input type="checkbox" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br>
-                        <input type="checkbox" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br>
-                        <input type="checkbox" value="C" name="answer"><span id="choicelabel">C.</span> <span id="choicestatement"> <%= choiceC %> </span><br>
-                        <input type="checkbox" value="D" name="answer"><span id="choicelabel">D.</span> <span id="choicestatement"> <%= choiceD %> </span><br>
-                        <input type="checkbox" value="E" name="answer"><span id="choicelabel">E.</span> <span id="choicestatement"> <%= choiceE %> </span><br>
+                        %> <div id = "choicemargin"><input type="checkbox" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br></div>
+                        <div id = "choicemargin"><input type="checkbox" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br></div>
+                        <div id = "choicemargin"><input type="checkbox" value="C" name="answer"><span id="choicelabel">C.</span> <span id="choicestatement"> <%= choiceC %> </span><br></div>
+                        <div id = "choicemargin"><input type="checkbox" value="D" name="answer"><span id="choicelabel">D.</span> <span id="choicestatement"> <%= choiceD %> </span><br></div>
+                        <div id = "choicemargin"><input type="checkbox" value="E" name="answer"><span id="choicelabel">E.</span> <span id="choicestatement"> <%= choiceE %> </span><br></div>
                     <%}
                     else{
-                        %><input type="radio" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br>
-                        <input type="radio" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br>
-                        <input type="radio" value="C" name="answer"><span id="choicelabel">C.</span> <span id="choicestatement"> <%= choiceC %> </span><br>
-                        <input type="radio" value="D" name="answer"><span id="choicelabel">D.</span> <span id="choicestatement"> <%= choiceD %> </span><br>
-                        <input type="radio" value="E" name="answer"><span id="choicelabel">E.</span> <span id="choicestatement"> <%= choiceE %> </span><br>
+                        %><div id = "choicemargin"><input type="radio" value="A" name="answer"><span id="choicelabel">A.</span> <span id="choicestatement"> <%= choiceA %> </span><br></div>
+                        <div id = "choicemargin"><input type="radio" value="B" name="answer"><span id="choicelabel">B.</span> <span id="choicestatement"> <%= choiceB %> </span><br></div>
+                        <div id = "choicemargin"><input type="radio" value="C" name="answer"><span id="choicelabel">C.</span> <span id="choicestatement"> <%= choiceC %> </span><br></div>
+                        <div id = "choicemargin"><input type="radio" value="D" name="answer"><span id="choicelabel">D.</span> <span id="choicestatement"> <%= choiceD %> </span><br></div>
+                        <div id = "choicemargin"><input type="radio" value="E" name="answer"><span id="choicelabel">E.</span> <span id="choicestatement"> <%= choiceE %> </span><br></div>
                     <%}
                 }
             %>
@@ -205,31 +205,6 @@
                     //Takes care of trying to submit without selecting an answer
                     if((request.getParameter("buttonName") != null)){                    
                         out.print("<span style=\"font-family: Helvetica, sans-serif\"> You did not answer this <img src=\"images/noanswer.jpg\" alt=\"No answer\"> </span><br>");
-                        //Insert results into db
-                            boolean bitA = false;
-                            boolean bitB = false;
-                            boolean bitC = false;
-                            boolean bitD = false;
-                            boolean bitE = false;
-                            boolean isCorrect = true;
-                            for(int i = 0; i < selectedAnswers.length; i++){
-                                 if (selectedAnswers[i].equalsIgnoreCase("A")){
-                                     bitA = true;
-                                 }
-                                 if (selectedAnswers[i].equalsIgnoreCase("B")){
-                                     bitB = true;
-                                 }
-                                 if (selectedAnswers[i].equalsIgnoreCase("C")){
-                                     bitC = true;
-                                 }
-                                 if (selectedAnswers[i].equalsIgnoreCase("D")){
-                                     bitD = true;
-                                 }
-                                 if (selectedAnswers[i].equalsIgnoreCase("E")){
-                                     bitE = true;
-                                 }
-                            }
-                            questionId.insert(isCorrect, request.getRemoteAddr(), bitA, bitB, bitC, bitD, bitE, request.getRemoteAddr());
                         if(questionId.getHint().length() > 0){
                             out.print("<div id=\"a4\" style=\"color: green; font-family: Helvetica, sans-serif\" > Click here to show correct answer and explanation. </div><br>");
                             out.print("<script type=\"text/javascript\">$(document).ready(function() {$(\"#a4\").click(function() {$(this).html(\"<span style= 'color: green; font-family: Helvetica, sans-serif;' > The correct answer is " + questionId.getAnswerKey() + "</span><br>" + "<div style = 'color: purple; font-family: Times New Roman;'> Explanation: " 
